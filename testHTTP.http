@@ -1,0 +1,33 @@
+### POST: Create Event
+POST http://localhost:8080/api/events
+Content-Type: application/json
+
+{
+  "id": "testId1",
+  "title": "Sample Event",
+  "startDate": "2024-06-28T10:00:00",
+  "endDate": "2024-06-28T15:00:00",
+  "location": "Event Hall A",
+  "description": "This is a sample event"
+}
+
+### GET: Get All Events
+GET http://localhost:8080/api/events
+
+### GET: Get Event by ID
+GET http://localhost:8080/api/events/testId
+
+### PUT: Update Event
+PUT http://localhost:8080/api/events/testId
+Content-Type: application/json
+
+{
+  "title": "Updated Event Title",
+  "startDate": "2024-06-28T10:00:00",
+  "endDate": "2024-06-28T16:00:00",
+  "location": "Event Hall B",
+  "description": "Updated event description"
+}
+
+### DELETE: Delete Event
+DELETE http://localhost:8080/api/events/testId
