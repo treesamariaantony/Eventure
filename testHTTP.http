@@ -1,33 +1,106 @@
-### POST: Create Event
-POST http://localhost:8080/api/events
+#### POST: Create User
+## @no-cookie-jar
+#POST http://localhost:8080/api/users/register
+#Content-Type: application/json
+#
+#{
+#  "username": "creator",
+#  "password": "creatorpassword",
+#  "email": "creator@example.com",
+#  "name": "Creator Name"
+#}
+#
+#
+#### POST: Create Event
+#POST http://localhost:8080/api/events
+#Content-Type: application/json
+#
+#{
+#  "id": "testId1",
+#  "title": "Sample Event",
+#  "startDate": "2024-06-28T10:00:00",
+#  "endDate": "2024-06-28T15:00:00",
+#  "location": "Event Hall A",
+#  "description": "This is a sample event"
+#}
+#
+#### GET: Get All Events
+## @no-cookie-jar
+#GET http://localhost:8080/api/events
+#
+#### GET: Get Event by ID
+#GET http://localhost:8080/api/events/testId
+#
+#### PUT: Update Event
+#PUT http://localhost:8080/api/events/testId
+#Content-Type: application/json
+#
+#{
+#  "title": "Updated Event Title",
+#  "startDate": "2024-06-28T10:00:00",
+#  "endDate": "2024-06-28T16:00:00",
+#  "location": "Event Hall B",
+#  "description": "Updated event description"
+#}
+#
+#### DELETE: Delete Event
+#DELETE http://localhost:8080/api/events/testId
+#
+# @no-cookie-jar
+### Variables are now defined in http-client.env.json
+
+### 1. Register a new user
+POST http://{{baseUrl}}/users/register
 Content-Type: application/json
 
 {
-  "id": "testId1",
-  "title": "Sample Event",
-  "startDate": "2024-06-28T10:00:00",
-  "endDate": "2024-06-28T15:00:00",
-  "location": "Event Hall A",
-  "description": "This is a sample event"
+  "username": "admin",
+  "password": "admin",
+  "email": "admin@example.com",
+  "name": "admin"
 }
 
-### GET: Get All Events
-GET http://localhost:8080/api/events
+### 2. Update user role (requires admin privileges)
+PUT http://{{baseUrl}}/users/USER_ID_HERE/role
+Authorization: {{adminToken}}
+Content-Type: application/json
 
-### GET: Get Event by ID
-GET http://localhost:8080/api/events/testId
+"CREATOR"
 
-### PUT: Update Event
-PUT http://localhost:8080/api/events/testId
+### 3. Create a new event (requires CREATOR or ADMIN role)
+POST http://{{baseUrl}}/events
+Authorization: {{creatorToken}}
 Content-Type: application/json
 
 {
-  "title": "Updated Event Title",
-  "startDate": "2024-06-28T10:00:00",
-  "endDate": "2024-06-28T16:00:00",
-  "location": "Event Hall B",
-  "description": "Updated event description"
+  "title": "Test Event",
+  "startDate": "2023-08-01T10:00:00Z",
+  "endDate": "2023-08-01T18:00:00Z",
+  "description": "This is a test event",
+  "location": "Test Location"
 }
 
-### DELETE: Delete Event
-DELETE http://localhost:8080/api/events/testId
+### 4. Get all events
+GET http://{{baseUrl}}/events
+Authorization: {{participantToken}}
+
+### 5. Get a specific event
+GET http://{{baseUrl}}/events/EVENT_ID_HERE
+Authorization: {{participantToken}}
+
+### 6. Update an event (requires CREATOR or ADMIN role)
+PUT http://{{baseUrl}}/events/EVENT_ID_HERE
+Authorization: {{creatorToken}}
+Content-Type: application/json
+
+{
+  "title": "Updated Test Event",
+  "startDate": "2023-08-01T11:00:00Z",
+  "endDate": "2023-08-01T19:00:00Z",
+  "description": "This is an updated test event",
+  "location": "Updated Test Location"
+}
+
+### 7. Delete an event (requires CREATOR or ADMIN role)
+DELETE http://{{baseUrl}}/events/EVENT_ID_HERE
+Authorization: {{creatorToken}}

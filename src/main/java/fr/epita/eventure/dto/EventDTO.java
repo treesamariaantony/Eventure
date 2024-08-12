@@ -1,6 +1,5 @@
 package fr.epita.eventure.dto;
 
-
 import java.util.Date;
 
 public class EventDTO {
@@ -11,6 +10,29 @@ public class EventDTO {
     private Date endDate;
     private String description;
     private String location;
+    private String userId;  // Reference to the User ID (instead of the full User object)
+
+    // Constructors, Getters, and Setters
+
+    public EventDTO() {}
+
+    public EventDTO(String id, String title, Date startDate, Date endDate, String description, String location, String userId) {
+        this.id = id;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.location = location;
+        this.userId = userId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -52,11 +74,11 @@ public class EventDTO {
         this.location = location;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getId() {
-        return id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }
